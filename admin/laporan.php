@@ -144,6 +144,17 @@ $customJs = '
                     $total_bersih = $total - $pengeluaran;
                     ?>
 
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Dari Tanggal</label>
+                            <input type="date" id="minDate" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Sampai Tanggal</label>
+                            <input type="date" id="maxDate" class="form-control">
+                        </div>
+                    </div>
+
                     <table id="basicTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -197,16 +208,41 @@ $customJs = '
 <?php
     $bodyJs = <<<'EOD'
     <script>
-
     $(function () {
-        $("#basicTable").DataTable({
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": false,
-            "lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ]
+        var table = $("#basicTable").DataTable({
+            responsive: true,
+            lengthChange: true,
+            autoWidth: false,
+            order: [[0, 'desc']],
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]]
+        });
+
+        // Tambahkan custom filter tanggal
+        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+            var min = $('#minDate').val();
+            var max = $('#maxDate').val();
+            var tanggal = data[0]; // Kolom pertama (Tanggal)
+
+            if (!tanggal) return false;
+
+            var tgl = new Date(tanggal);
+
+            if (
+                (min === "" || new Date(min) <= tgl) &&
+                (max === "" || new Date(max) >= tgl)
+            ) {
+                return true;
+            }
+            return false;
+        });
+
+        // Event saat input tanggal diubah
+        $('#minDate, #maxDate').on('change', function () {
+            table.draw();
         });
     });
     </script>
+
 
 
     <script>

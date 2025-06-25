@@ -215,6 +215,16 @@ $customJs = '
                         </tbody>
                     </table>
 
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Dari Tanggal</label>
+                            <input type="date" id="minDate" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Sampai Tanggal</label>
+                            <input type="date" id="maxDate" class="form-control">
+                        </div>
+                    </div>
 
                     </div>
                     <!-- /.card-body -->
@@ -309,15 +319,39 @@ $customJs = '
 <?php
     $bodyJs = <<<'EOD'
     <script>
+        $(function () {
+            var table = $("#basicTable").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]]
+            });
 
-    $(function () {
-        $("#basicTable").DataTable({
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": false,
-            "lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ]
+            // Filter berdasarkan tanggal sewa
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var min = $('#minDate').val();
+                    var max = $('#maxDate').val();
+                    var tanggal = data[4]; // Kolom ke-5 = Tgl Sewa
+
+                    if (!tanggal) return false;
+
+                    var tgl = new Date(tanggal);
+
+                    if (
+                        (min === "" || new Date(min) <= tgl) &&
+                        (max === "" || new Date(max) >= tgl)
+                    ) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+            $('#minDate, #maxDate').on('change', function () {
+                table.draw();
+            });
         });
-    });
     </script>
 
 

@@ -1,5 +1,5 @@
 <?php
-$title = 'CRUD ADMIN';
+$title = 'ADMIN TRAVEL';
 
 $customCss = '
 

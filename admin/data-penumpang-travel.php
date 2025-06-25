@@ -76,6 +76,17 @@ $customJs = '
                         ORDER BY t.id DESC");
                     ?>
 
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Dari Tanggal</label>
+                            <input type="date" id="minDate" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Sampai Tanggal</label>
+                            <input type="date" id="maxDate" class="form-control">
+                        </div>
+                    </div>
+
                     <table id="basicTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -320,11 +331,38 @@ $customJs = '
     <script>
 
     $(function () {
-        $("#basicTable").DataTable({
+        var table = $("#basicTable").DataTable({
             "responsive": true,
             "lengthChange": true,
             "autoWidth": false,
             "lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ]
+        });
+
+        // Custom filtering function for date range
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = $('#minDate').val();
+                var max = $('#maxDate').val();
+                var tanggal = data[3]; // kolom ke-4 (tgl_berangkat), pastikan sesuai
+
+                if (!tanggal) return false;
+
+                // Format ke yyyy-mm-dd jika perlu
+                var tanggalParts = tanggal.split('-');
+                var tglFormatted = new Date(tanggalParts[0], tanggalParts[1] - 1, tanggalParts[2]);
+
+                if (
+                    (min === "" || new Date(min) <= tglFormatted) &&
+                    (max === "" || new Date(max) >= tglFormatted)
+                ) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $('#minDate, #maxDate').on('change', function () {
+            table.draw();
         });
     });
     </script>
