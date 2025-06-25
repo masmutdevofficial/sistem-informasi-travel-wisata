@@ -1,7 +1,7 @@
 <?php
 require '../config/koneksi.php';
-// require '../config/auth.php';
-// require_login();
+require '../config/auth.php';
+require_login();
 ?>
 
 <!DOCTYPE html>

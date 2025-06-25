@@ -111,3 +111,12 @@ CREATE TABLE data_peserta_wisata (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_data_paket_wisata) REFERENCES data_paket_wisata(id) ON DELETE CASCADE
 );
+
+-- Tabel pengeluaran
+CREATE TABLE pengeluaran (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    keterangan TEXT NOT NULL,
+    jumlah_pengeluaran DECIMAL(20,2) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

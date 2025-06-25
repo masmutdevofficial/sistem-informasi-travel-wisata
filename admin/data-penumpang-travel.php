@@ -53,7 +53,6 @@ $customJs = '
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-
                 <div class="card card-outline card-primary">
                     <div class="card-header">
                         <div class="d-flex flex-row justify-content-between align-items-center">
@@ -62,6 +61,9 @@ $customJs = '
                                 <button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalTambahBasic">
                                     <i class="fa fa-plus mr-2"></i>Tambah Travel
                                 </button>
+                                <a class="btn btn-secondary mr-2" href="cetak/cetak-data-travel.php">
+                                    <i class="fa fa-print mr-2"></i>Cetak Travel
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -62,6 +62,9 @@ $customJs = '
                                 <button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalTambahBasic">
                                     <i class="fa fa-plus mr-2"></i>Tambah Peserta Wisata
                                 </button>
+                                <a class="btn btn-secondary mr-2" href="cetak/cetak-data-wisata.php">
+                                    <i class="fa fa-print mr-2"></i>Cetak Peserta Wisata
+                                </a>
                             </div>
                         </div>
                     </div>

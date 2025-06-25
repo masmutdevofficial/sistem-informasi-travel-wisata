@@ -16,3 +16,18 @@ Stack trace:
 [2025-05-04 14:09:44] [WARNING] include(): Failed opening '../layouts/admin_footer.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\crud-template\admin\404.php on line 36
 [2025-06-06 04:03:33] [WARNING] include(../layouts/admin_footer.php): Failed to open stream: No such file or directory in D:\php\crud-template\admin\404.php on line 36
 [2025-06-06 04:03:33] [WARNING] include(): Failed opening '../layouts/admin_footer.php' for inclusion (include_path='.;C:/laragon/etc/php/pear') in D:\php\crud-template\admin\404.php on line 36
+[2025-06-25 19:31:15] [WARNING] Undefined variable $total in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\laporan.php on line 88
+[2025-06-25 19:32:24] [WARNING] Undefined variable $total in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\laporan.php on line 102
+[2025-06-25 19:32:51] [WARNING] Undefined variable $total in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\laporan.php on line 102
+[2025-06-25 19:34:27] [WARNING] Undefined variable $total in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\laporan.php on line 102
+[2025-06-25 19:35:29] [WARNING] Undefined variable $total in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\laporan.php on line 88
+[25-Jun-2025 20:03:57 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'db_travel.users' doesn't exist in D:\project\php\php-native\sistem-informasi-travel-wisata\auth\login.php:21
+Stack trace:
+#0 D:\project\php\php-native\sistem-informasi-travel-wisata\auth\login.php(21): mysqli->prepare('SELECT id, nama...')
+#1 {main}
+  thrown in D:\project\php\php-native\sistem-informasi-travel-wisata\auth\login.php on line 21
+[2025-06-25 20:03:57] [FATAL] Uncaught mysqli_sql_exception: Table 'db_travel.users' doesn't exist in D:\project\php\php-native\sistem-informasi-travel-wisata\auth\login.php:21
+Stack trace:
+#0 D:\project\php\php-native\sistem-informasi-travel-wisata\auth\login.php(21): mysqli->prepare('SELECT id, nama...')
+#1 {main}
+  thrown in D:\project\php\php-native\sistem-informasi-travel-wisata\auth\login.php on line 21

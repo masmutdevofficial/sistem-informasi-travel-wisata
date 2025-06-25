@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitize($_POST['email']);
     $password = $_POST['password'];
     
-    $stmt = $koneksi->prepare('SELECT id, nama, password FROM users WHERE email=? AND status=1 LIMIT 1');
+    $stmt = $koneksi->prepare('SELECT id, nama, password FROM admin WHERE email=? AND status=1 LIMIT 1');
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>Admin</b>LTE</a>
+    <a href="#"><b>Admin</b>Travel</a>
   </div>
   <div class="card">
     <div class="card-body login-card-body">

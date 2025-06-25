@@ -62,6 +62,9 @@ $customJs = '
                                 <button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalTambahBasic">
                                     <i class="fa fa-plus mr-2"></i>Tambah Carter/Sewa
                                 </button>
+                                <a class="btn btn-secondary mr-2" href="cetak/cetak-data-carter.php">
+                                    <i class="fa fa-print mr-2"></i>Cetak Carter
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -113,7 +116,7 @@ $customJs = '
                             <!-- Modal Edit -->
                             <div class="modal fade" id="modalEdit<?= $row['id'] ?>" tabindex="-1">
                                 <div class="modal-dialog">
-                                    <form action="proses/edit_penumpang_carter.php" method="POST">
+                                    <form action="proses/edit_carter.php" method="POST">
                                         <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -190,7 +193,7 @@ $customJs = '
                             <!-- Modal Hapus -->
                             <div class="modal fade" id="modalHapus<?= $row['id'] ?>" tabindex="-1">
                                 <div class="modal-dialog">
-                                    <form action="proses/hapus_penumpang_carter.php" method="POST">
+                                    <form action="proses/hapus_carter.php" method="POST">
                                         <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -219,7 +222,7 @@ $customJs = '
                     <!-- Modal Tambah -->
                     <div class="modal fade" id="modalTambahBasic" tabindex="-1" aria-labelledby="modalTambahCarterLabel" aria-hidden="true">
                         <div class="modal-dialog">
-                            <form action="proses/tambah_penumpang_carter.php" method="POST">
+                            <form action="proses/tambah_carter.php" method="POST">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Tambah Data Carter</h5>

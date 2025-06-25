@@ -36,12 +36,11 @@ $customJs = '
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Kelola Kendaraan</h1>
+                <h1>Data Pengeluaran</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-                    <li class="breadcrumb-item active">Kelola Kendaraan</li>
+                    <li class="breadcrumb-item active">Data Pengeluaran</li>
                 </ol>
             </div>
         </div>
@@ -57,25 +56,27 @@ $customJs = '
                 <div class="card card-outline card-primary">
                     <div class="card-header">
                         <div class="d-flex flex-row justify-content-between align-items-center">
-                            <h3 class="card-title">Kelola Kendaraan</h3>
+                            <h3 class="card-title">Data Pengeluaran</h3>
                             <div class="d-flex flex-row justify-content-center align-items-center">
                                 <button class="btn btn-primary mr-2" data-toggle="modal" data-target="#modalTambahBasic">
-                                    <i class="fa fa-plus mr-2"></i>Tambah Kendaraan
+                                    <i class="fa fa-plus mr-2"></i>Tambah Pengeluaran
                                 </button>
                             </div>
                         </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                    <?php $query = mysqli_query($koneksi, "SELECT * FROM data_kendaraan ORDER BY id DESC"); ?>
+                    <?php
+                    $query = mysqli_query($koneksi, "SELECT * FROM pengeluaran ORDER BY id DESC");
+                    ?>
 
                     <table id="basicTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nomor Polisi</th>
-                                <th>Kapasitas</th>
-                                <th>Status</th>
+                                <th>Keterangan</th>
+                                <th>Jumlah Pengeluaran</th>
+                                <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -83,44 +84,33 @@ $customJs = '
                             <?php $no = 1; while ($row = mysqli_fetch_assoc($query)) : ?>
                             <tr>
                                 <td><?= $no++ ?></td>
-                                <td><?= htmlspecialchars($row['nomor_polisi']) ?></td>
-                                <td><?= htmlspecialchars($row['kapasitas']) ?></td>
-                                <td><?= $row['status'] ?></td>
+                                <td><?= htmlspecialchars($row['keterangan']) ?></td>
+                                <td>Rp<?= number_format($row['jumlah_pengeluaran'], 0, ',', '.') ?></td>
+                                <td><?= date('d-m-Y H:i', strtotime($row['created_at'])) ?></td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEdit<?= $row['id'] ?>">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalHapus<?= $row['id'] ?>">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalEdit<?= $row['id'] ?>"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalHapus<?= $row['id'] ?>"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
 
                             <!-- Modal Edit -->
                             <div class="modal fade" id="modalEdit<?= $row['id'] ?>" tabindex="-1">
                                 <div class="modal-dialog">
-                                    <form action="proses/edit_kendaraan.php" method="POST">
+                                    <form action="proses/edit_pengeluaran.php" method="POST">
                                         <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Edit Kendaraan</h5>
+                                                <h5 class="modal-title">Edit Pengeluaran</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label>Nomor Polisi</label>
-                                                    <input type="text" name="nomor_polisi" value="<?= htmlspecialchars($row['nomor_polisi']) ?>" class="form-control" required>
+                                                    <label>Keterangan</label>
+                                                    <textarea name="keterangan" class="form-control" required><?= htmlspecialchars($row['keterangan']) ?></textarea>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label>Kapasitas</label>
-                                                    <input type="number" name="kapasitas" value="<?= htmlspecialchars($row['kapasitas']) ?>" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label>Status</label>
-                                                    <select name="status" class="form-control">
-                                                        <option value="Aktif" <?= $row['status'] == 'Aktif' ? 'selected' : '' ?>>Aktif</option>
-                                                        <option value="Perbaikan" <?= $row['status'] == 'Perbaikan' ? 'selected' : '' ?>>Perbaikan</option>
-                                                    </select>
+                                                    <label>Jumlah Pengeluaran</label>
+                                                    <input type="number" step="0.01" name="jumlah_pengeluaran" value="<?= $row['jumlah_pengeluaran'] ?>" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -135,15 +125,16 @@ $customJs = '
                             <!-- Modal Hapus -->
                             <div class="modal fade" id="modalHapus<?= $row['id'] ?>" tabindex="-1">
                                 <div class="modal-dialog">
-                                    <form action="proses/hapus_kendaraan.php" method="POST">
+                                    <form action="proses/hapus_pengeluaran.php" method="POST">
                                         <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Konfirmasi Hapus</h5>
+                                                <h5 class="modal-title">Hapus Pengeluaran</h5>
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
                                             <div class="modal-body">
-                                                Yakin ingin menghapus kendaraan dengan nomor <strong><?= htmlspecialchars($row['nomor_polisi']) ?></strong>?
+                                                Yakin ingin menghapus pengeluaran dengan keterangan:
+                                                <strong><?= htmlspecialchars($row['keterangan']) ?></strong>?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
@@ -158,46 +149,36 @@ $customJs = '
                         </tbody>
                     </table>
 
-
                     </div>
                     <!-- /.card-body -->
 
                     <!-- Modal Tambah -->
-                    <div class="modal fade" id="modalTambahBasic" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
+                    <div class="modal fade" id="modalTambahBasic" tabindex="-1">
                         <div class="modal-dialog">
-                            <form action="proses/tambah_kendaraan.php" method="POST">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Tambah Data Kendaraan</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label>Nomor Polisi</label>
-                                            <input type="text" name="nomor_polisi" class="form-control" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Kapasitas</label>
-                                            <input type="number" name="kapasitas" class="form-control" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Status</label>
-                                            <select name="status" class="form-control">
-                                                <option value="Aktif">Aktif</option>
-                                                <option value="Perbaikan">Perbaikan</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                    </div>
+                            <form action="proses/tambah_pengeluaran.php" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title">Tambah Pengeluaran</h5>
+                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                 </div>
+                                <div class="modal-body">
+                                <div class="mb-3">
+                                    <label>Keterangan</label>
+                                    <textarea name="keterangan" class="form-control" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Jumlah Pengeluaran</label>
+                                    <input type="number" step="0.01" name="jumlah_pengeluaran" class="form-control" required>
+                                </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                </div>
+                            </div>
                             </form>
                         </div>
                     </div>
-
-
 
                 </div>
 
@@ -223,6 +204,7 @@ $customJs = '
         });
     });
     </script>
+
     EOD;
     ?>
 

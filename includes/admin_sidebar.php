@@ -95,19 +95,11 @@
                 <li class="nav-header">LAPORAN</li>
 
                 <li class="nav-item">
-                    <a href="laporan-transaksi.php" class="nav-link <?= isActive('laporan-transaksi.php') ?> ml-3">
+                    <a href="laporan.php" class="nav-link <?= isActive('laporan.php') ?> ml-3">
                         <i class="fas fa-receipt nav-icon"></i>
-                        <p>Laporan Transaksi</p>
+                        <p>Laporan</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="laporan-keuangan.php" class="nav-link <?= isActive('laporan-keuangan.php') ?> ml-3">
-                        <i class="fas fa-wallet nav-icon"></i>
-                        <p>Laporan Keuangan</p>
-                    </a>
-                </li>
-
-
               </ul>
           </nav>
           <!-- /.sidebar-menu -->
