@@ -1,0 +1,18 @@
+[04-May-2025 06:43:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function isMenuActive() in D:\php-crud-templates\php-native\includes\admin_sidebar.php:94
+Stack trace:
+#0 D:\php-crud-templates\php-native\includes\admin_header.php(30): include()
+#1 D:\php-crud-templates\php-native\admin\laporan.php(31): include('D:\\php-crud-tem...')
+#2 {main}
+  thrown in D:\php-crud-templates\php-native\includes\admin_sidebar.php on line 94
+[2025-05-04 06:43:22] [FATAL] Uncaught Error: Call to undefined function isMenuActive() in D:\php-crud-templates\php-native\includes\admin_sidebar.php:94
+Stack trace:
+#0 D:\php-crud-templates\php-native\includes\admin_header.php(30): include()
+#1 D:\php-crud-templates\php-native\admin\laporan.php(31): include('D:\\php-crud-tem...')
+#2 {main}
+  thrown in D:\php-crud-templates\php-native\includes\admin_sidebar.php on line 94
+[2025-05-04 13:44:18] [WARNING] include(../layouts/admin_footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\crud-template\admin\404.php on line 36
+[2025-05-04 13:44:18] [WARNING] include(): Failed opening '../layouts/admin_footer.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\crud-template\admin\404.php on line 36
+[2025-05-04 14:09:44] [WARNING] include(../layouts/admin_footer.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\crud-template\admin\404.php on line 36
+[2025-05-04 14:09:44] [WARNING] include(): Failed opening '../layouts/admin_footer.php' for inclusion (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\crud-template\admin\404.php on line 36
+[2025-06-06 04:03:33] [WARNING] include(../layouts/admin_footer.php): Failed to open stream: No such file or directory in D:\php\crud-template\admin\404.php on line 36
+[2025-06-06 04:03:33] [WARNING] include(): Failed opening '../layouts/admin_footer.php' for inclusion (include_path='.;C:/laragon/etc/php/pear') in D:\php\crud-template\admin\404.php on line 36

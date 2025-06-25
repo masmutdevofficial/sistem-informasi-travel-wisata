@@ -1,0 +1,70 @@
+crud-template
+ ┣ admin
+ ┣ assets
+ ┃ ┣ css
+ ┃ ┃ ┣ alt
+ ┃ ┃ ┣ adminlte.css
+ ┃ ┃ ┣ adminlte.css.map
+ ┃ ┃ ┣ adminlte.min.css
+ ┃ ┃ ┣ adminlte.min.css.map
+ ┃ ┃ ┗ styles.css
+ ┃ ┣ img
+ ┃ ┣ js
+ ┃ ┃ ┣ pages
+ ┃ ┃ ┃ ┣ dashboard.js
+ ┃ ┃ ┃ ┣ dashboard2.js
+ ┃ ┃ ┃ ┗ dashboard3.js
+ ┃ ┃ ┣ .eslintrc.json
+ ┃ ┃ ┣ adminlte.js
+ ┃ ┃ ┣ adminlte.js.map
+ ┃ ┃ ┣ adminlte.min.js
+ ┃ ┃ ┣ adminlte.min.js.map
+ ┃ ┃ ┗ demo.js
+ ┃ ┣ plugins
+ ┃ ┗ uploads
+ ┃ ┃ ┗ produk
+ ┃ ┃ ┃ ┗ 1745442368_btrexo_logo.png
+ ┣ auth
+ ┃ ┣ login.php
+ ┃ ┣ logout.php
+ ┃ ┗ register.php
+ ┣ config
+ ┃ ┣ auth.php
+ ┃ ┣ function.php
+ ┃ ┣ init.php
+ ┃ ┣ koneksi.php
+ ┃ ┗ session.php
+ ┣ database
+ ┃ ┗ crud_db.sql
+ ┣ includes
+ ┃ ┣ admin_footer.php
+ ┃ ┣ admin_header.php
+ ┃ ┣ admin_navbar.php
+ ┃ ┗ admin_sidebar.php
+ ┣ logs
+ ┃ ┗ error.log
+ ┣ templates
+ ┃ ┣ proses
+ ┃ ┃ ┣ add-produk.php
+ ┃ ┃ ┗ get-produk.php
+ ┃ ┣ 404.php
+ ┃ ┣ berita.php
+ ┃ ┣ blank.php
+ ┃ ┣ chat.php
+ ┃ ┣ dashboard.php
+ ┃ ┣ datatables.php
+ ┃ ┣ file-manager.php
+ ┃ ┣ forms.php
+ ┃ ┣ kalender.php
+ ┃ ┣ laporan.php
+ ┃ ┣ multi-checkout.php
+ ┃ ┣ notifikasi.php
+ ┃ ┣ pos.php
+ ┃ ┣ profil.php
+ ┃ ┣ tables.php
+ ┃ ┗ wizard.php
+ ┣ .gitignore
+ ┣ .htaccess
+ ┣ .prettierignore
+ ┣ index.php
+ ┗ README.md
