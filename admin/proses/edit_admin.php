@@ -3,37 +3,39 @@ session_start();
 require '../../config/koneksi.php';
 
 try {
-    $id = $_POST['id'];
-    $nama = $_POST['nama'];
-    $email = $_POST['email'];
-    $hp = $_POST['hp'];
-    $status = $_POST['status'];
-    $password = $_POST['password'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id       = $_POST['id'];
+        $username = $_POST['username'];
+        $nama     = $_POST['nama'];
+        $email    = $_POST['email'];
+        $hp       = $_POST['hp'];
+        $status   = $_POST['status'];
+        $password = $_POST['password'];
 
-    // Validasi wajib isi
-    if (empty($id) || empty($nama) || empty($email) || empty($hp)) {
-        throw new Exception("Semua field wajib diisi.");
+        // Ambil password lama dari DB
+        $stmt = $koneksi->prepare("SELECT password FROM admin WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->bind_result($password_lama);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Cek apakah field password dikosongkan atau diisi
+        if (!empty($password)) {
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        } else {
+            $hashed_password = $password_lama; // gunakan password sebelumnya
+        }
+
+        // Update data admin
+        $stmt = $koneksi->prepare("UPDATE admin SET username = ?, nama = ?, email = ?, hp = ?, password = ?, status = ? WHERE id = ?");
+        $stmt->bind_param("ssssssi", $username, $nama, $email, $hp, $hashed_password, $status, $id);
+        $stmt->execute();
+
+        $_SESSION['success'] = "Data berhasil diupdate.";
     }
-
-    // Update dengan atau tanpa password
-    if (!empty($password)) {
-        $hashed = password_hash($password, PASSWORD_BCRYPT);
-        $query = "UPDATE admin SET nama=?, email=?, hp=?, status=?, password=? WHERE id=?";
-        $stmt = $koneksi->prepare($query);
-        $stmt->bind_param("sssisi", $nama, $email, $hp, $status, $hashed, $id);
-    } else {
-        $query = "UPDATE admin SET nama=?, email=?, hp=?, status=? WHERE id=?";
-        $stmt = $koneksi->prepare($query);
-        $stmt->bind_param("sssii", $nama, $email, $hp, $status, $id);
-    }
-
-    if (!$stmt->execute()) {
-        throw new Exception("Gagal mengupdate data: " . $stmt->error);
-    }
-
-    $_SESSION['success'] = "Data admin berhasil diperbarui.";
-    header("Location: ../kelola-admin.php");
 } catch (Exception $e) {
-    $_SESSION['error'] = $e->getMessage();
-    header("Location: ../kelola-admin.php");
+    $_SESSION['error'] = "Gagal mengupdate data: " . $e->getMessage();
 }
+
+header("Location: ../data-admin.php");

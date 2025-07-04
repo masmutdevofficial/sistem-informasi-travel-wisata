@@ -3,28 +3,20 @@ session_start();
 require '../../config/koneksi.php';
 
 try {
-    $id = $_POST['id'];
+    if (isset($_GET['id'])) {
+        $id = (int) $_GET['id'];
 
-    if (empty($id)) {
-        throw new Exception("ID tidak ditemukan.");
+        if ($id === 1) {
+            $_SESSION['error'] = "Admin utama tidak boleh dihapus.";
+        } else {
+            $stmt = $koneksi->prepare("DELETE FROM admin WHERE id = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $_SESSION['success'] = "Data berhasil dihapus.";
+        }
     }
-
-    // Cegah hapus admin ID = 1
-    if ($id == 1) {
-        throw new Exception("Admin utama tidak boleh dihapus.");
-    }
-
-    $query = "DELETE FROM admin WHERE id = ?";
-    $stmt = $koneksi->prepare($query);
-    $stmt->bind_param("i", $id);
-
-    if (!$stmt->execute()) {
-        throw new Exception("Gagal menghapus data: " . $stmt->error);
-    }
-
-    $_SESSION['success'] = "Data admin berhasil dihapus.";
-    header("Location: ../kelola-admin.php");
 } catch (Exception $e) {
-    $_SESSION['error'] = $e->getMessage();
-    header("Location: ../kelola-admin.php");
+    $_SESSION['error'] = "Gagal menghapus data: " . $e->getMessage();
 }
+
+header("Location: ../data-admin.php");

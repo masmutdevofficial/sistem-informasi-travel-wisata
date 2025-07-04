@@ -16,38 +16,26 @@ $customJs = '
 
 <?php
 $events = [];
+$q = $koneksi->query("
+    SELECT id, waktu_berangkat, jenis_pemesanan
+    FROM data_pesanan
+    WHERE waktu_berangkat IS NOT NULL
+");
 
-// Booking Travel (biru)
-$q1 = mysqli_query($koneksi, "SELECT tgl_berangkat FROM data_penumpang_travel");
-while ($row = mysqli_fetch_assoc($q1)) {
+$colorMap = [
+    'Travel'       => '#007bff', // biru
+    'Sewa/Carter'  => '#28a745', // hijau
+    'Paket Wisata' => '#6f42c1'  // ungu
+];
+
+while ($row = $q->fetch_assoc()) {
     $events[] = [
-        'title' => 'Booking Travel',
-        'start' => $row['tgl_berangkat'],
-        'color' => '#007bff' // biru
+        'id'    => $row['id'],                       // kirim id pesanan
+        'title' => 'Booking ' . $row['jenis_pemesanan'],
+        'start' => $row['waktu_berangkat'],
+        'color' => $colorMap[$row['jenis_pemesanan']]
     ];
 }
-
-// Booking Carter (hijau)
-$q2 = mysqli_query($koneksi, "SELECT tgl_sewa FROM data_penumpang_carter");
-while ($row = mysqli_fetch_assoc($q2)) {
-    $events[] = [
-        'title' => 'Booking Carter',
-        'start' => $row['tgl_sewa'],
-        'color' => '#28a745' // hijau
-    ];
-}
-
-// Booking Wisata (ungu)
-$q3 = mysqli_query($koneksi, "SELECT tgl_keberangkatan FROM data_peserta_wisata");
-while ($row = mysqli_fetch_assoc($q3)) {
-    $events[] = [
-        'title' => 'Booking Wisata',
-        'start' => $row['tgl_keberangkatan'],
-        'color' => '#6f42c1' // ungu
-    ];
-}
-
-// Ubah ke format JSON
 $eventsJson = json_encode($events);
 ?>
 
@@ -56,12 +44,12 @@ $eventsJson = json_encode($events);
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>File Manager</h1>
+                <h1>Manajemen Jadwal</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                    <li class="breadcrumb-item active">File Manager</li>
+                    <li class="breadcrumb-item active">Manajemen Jadwal</li>
                 </ol>
             </div>
         </div>
@@ -73,7 +61,7 @@ $eventsJson = json_encode($events);
   <div class="container-fluid">
     <div class="card card-outline card-primary">
       <div class="card-header">
-        <h3 class="card-title">Kalender Kegiatan</h3>
+        <h3 class="card-title">Manajemen Jadwal</h3>
       </div>
       <div class="card-body">
         <div id="calendar"></div>
@@ -132,36 +120,33 @@ document.addEventListener('DOMContentLoaded', function() {
     events: kalenderEvents, // diisi dari PHP luar heredoc
 
     eventClick: function(info) {
-      const eventType = getEventType(info.event.title);
-      const eventDate = info.event.startStr;
+    const idPesanan = info.event.id;
 
-      fetch(`ajax/get-event-detail.php?type=${eventType}&date=${eventDate}`)
+    fetch(`ajax/get-pesanan-detail.php?id=${idPesanan}`)
         .then(res => res.json())
         .then(data => {
-          let html = '';
+        if (!data) {
+            Swal.fire('Oops', 'Data tidak ditemukan.', 'warning');
+            return;
+        }
 
-          if (data.length > 0) {
-            data.forEach((item, index) => {
-              html += `<div><b>Data ${index + 1}</b><br>`;
-              for (let key in item) {
-                html += `<b>${key}:</b> ${item[key]}<br>`;
-              }
-              html += `</div><hr>`;
-            });
-          } else {
-            html = 'Tidak ada data untuk tanggal ini.';
-          }
+        // Susun HTML detail sederhana
+        const html = `
+            <b>Jenis:</b> ${data.jenis_pemesanan}<br>
+            <b>Pelanggan:</b> ${data.pelanggan}<br>
+            <b>Kendaraan:</b> ${data.kendaraan}<br>
+            <b>Berangkat:</b> ${data.waktu_berangkat}<br>
+            <b>Harga:</b> Rp${data.harga}<br>
+            <b>Status Bayar:</b> ${data.status_bayar}<br>
+        `;
 
-          Swal.fire({
-            title: info.event.title,
+        Swal.fire({
+            title: 'Detail Pesanan #'+idPesanan,
             html: html,
-            width: 600,
-            confirmButtonText: 'Tutup'
-          });
-        })
-        .catch(err => {
-          Swal.fire('Error', 'Gagal mengambil data detail.', 'error');
+            width: 600
         });
+        })
+        .catch(_=> Swal.fire('Error', 'Gagal mengambil data.', 'error'));
     }
   });
 

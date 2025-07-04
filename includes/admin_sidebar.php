@@ -22,67 +22,39 @@
                     </a>
                 </li>
 
-                <!-- Master Data -->
-                <li class="nav-header">MASTER DATA</li>
+                <!-- Menu -->
+                <li class="nav-header">Menu</li>
 
                 <li class="nav-item">
-                    <a href="kelola-admin.php" class="nav-link <?= isActive('kelola-admin.php') ?> ml-3">
+                    <a href="data-admin.php" class="nav-link <?= isActive('data-admin.php') ?> ml-3">
                         <i class="fas fa-user-shield nav-icon"></i>
-                        <p>Kelola Admin</p>
+                        <p>Data Admin</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="kelola-driver.php" class="nav-link <?= isActive('kelola-driver.php') ?> ml-3">
+                    <a href="data-driver.php" class="nav-link <?= isActive('data-driver.php') ?> ml-3">
                         <i class="fas fa-user-tie nav-icon"></i>
-                        <p>Kelola Driver</p>
+                        <p>Data Driver</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="kelola-kendaraan.php" class="nav-link <?= isActive('kelola-kendaraan.php') ?> ml-3">
+                    <a href="data-kendaraan.php" class="nav-link <?= isActive('data-kendaraan.php') ?> ml-3">
                         <i class="fas fa-shuttle-van nav-icon"></i>
-                        <p>Kelola Kendaraan</p>
+                        <p>Data Kendaraan</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="kelola-paket-wisata.php" class="nav-link <?= isActive('kelola-paket-wisata.php') ?> ml-3">
-                        <i class="fas fa-map-marked-alt nav-icon"></i>
-                        <p>Kelola Paket Wisata</p>
+                    <a href="data-pelanggan.php" class="nav-link <?= isActive('data-pelanggan.php') ?> ml-3">
+                        <i class="fas fa-users-between-lines nav-icon"></i>
+                        <p>Data Pelanggan</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="kelola-rute.php" class="nav-link <?= isActive('kelola-rute.php') ?> ml-3">
-                        <i class="fas fa-street-view nav-icon"></i>
-                        <p>Kelola Rute</p>
+                    <a href="data-pemesanan.php" class="nav-link <?= isActive('data-pemesanan.php') ?> ml-3">
+                        <i class="fas fa-book nav-icon"></i>
+                        <p>Data Pemesanan</p>
                     </a>
                 </li>
-
-                <!-- Input Data -->
-                <li class="nav-header">INPUT DATA</li>
-                
-
-                <li class="nav-item">
-                    <a href="data-penumpang-travel.php" class="nav-link <?= isActive('data-penumpang-travel.php') ?> ml-3">
-                        <i class="fas fa-users nav-icon"></i>
-                        <p>Data Penumpang Travel</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="data-carter.php" class="nav-link <?= isActive('data-carter.php') ?> ml-3">
-                        <i class="fas fa-users nav-icon"></i>
-                        <p>Data Carter/Sewa</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="data-peserta-wisata.php" class="nav-link <?= isActive('data-peserta-wisata.php') ?> ml-3">
-                        <i class="fas fa-users nav-icon"></i>
-                        <p>Data Peserta Wisata</p>
-                    </a>
-                </li>
-
-                <!-- Manajemen Jadwal -->
-                <li class="nav-header">JADWAL</li>
 
                 <li class="nav-item">
                     <a href="manajemen-jadwal.php" class="nav-link <?= isActive('manajemen-jadwal.php') ?> ml-3">
