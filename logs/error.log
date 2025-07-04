@@ -1,0 +1,20 @@
+[04-Jul-2025 20:11:33 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'db_travel.data_penumpang_travel' doesn't exist in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php:40
+Stack trace:
+#0 D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php(40): mysqli->prepare('SELECT COUNT(*)...')
+#1 {main}
+  thrown in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php on line 40
+[2025-07-04 20:11:33] [FATAL] Uncaught mysqli_sql_exception: Table 'db_travel.data_penumpang_travel' doesn't exist in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php:40
+Stack trace:
+#0 D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php(40): mysqli->prepare('SELECT COUNT(*)...')
+#1 {main}
+  thrown in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php on line 40
+[04-Jul-2025 20:11:37 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'db_travel.data_penumpang_travel' doesn't exist in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php:40
+Stack trace:
+#0 D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php(40): mysqli->prepare('SELECT COUNT(*)...')
+#1 {main}
+  thrown in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php on line 40
+[2025-07-04 20:11:37] [FATAL] Uncaught mysqli_sql_exception: Table 'db_travel.data_penumpang_travel' doesn't exist in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php:40
+Stack trace:
+#0 D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php(40): mysqli->prepare('SELECT COUNT(*)...')
+#1 {main}
+  thrown in D:\project\php\php-native\sistem-informasi-travel-wisata\admin\dashboard.php on line 40

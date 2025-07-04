@@ -32,96 +32,102 @@ $customJs = '
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
+<?php
+$tanggal_hari_ini = date('Y-m-d');
+$awal_minggu = date('Y-m-d', strtotime('monday this week'));
 
-        <?php
-        $tanggal_hari_ini = date('Y-m-d');
-        $awal_minggu = date('Y-m-d', strtotime('monday this week'));
+// Travel Hari Ini
+$travel_query = mysqli_query($koneksi, "
+    SELECT COUNT(*) AS total 
+    FROM data_pesanan 
+    WHERE DATE(waktu_berangkat) = '$tanggal_hari_ini'
+    AND jenis_pemesanan = 'Travel'
+");
+$jumlah_travel = mysqli_fetch_assoc($travel_query)['total'];
 
-        // Travel Hari Ini
-        $travel_hari_ini = mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM data_penumpang_travel WHERE tgl_berangkat = '$tanggal_hari_ini'");
-        $jumlah_travel = mysqli_fetch_assoc($travel_hari_ini)['total'];
+// Carter Aktif (status_bayar bukan 'Belum Bayar')
+$carter_query = mysqli_query($koneksi, "
+    SELECT COUNT(*) AS total 
+    FROM data_pesanan 
+    WHERE jenis_pemesanan = 'Sewa/Carter' 
+    AND status_bayar != 'Belum Bayar'
+");
+$jumlah_carter = mysqli_fetch_assoc($carter_query)['total'];
 
-        // Carter Aktif (dengan status_bayar bukan 'Belum Bayar')
-        $carter_aktif = mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM data_penumpang_carter WHERE status_bayar != 'Belum Bayar'");
-        $jumlah_carter = mysqli_fetch_assoc($carter_aktif)['total'];
+// Wisata Minggu Ini (dari Senin sampai hari ini)
+$wisata_query = mysqli_query($koneksi, "
+    SELECT COUNT(*) AS total 
+    FROM data_pesanan 
+    WHERE jenis_pemesanan = 'Paket Wisata'
+    AND DATE(waktu_berangkat) >= '$awal_minggu'
+");
+$jumlah_wisata = mysqli_fetch_assoc($wisata_query)['total'];
 
-        // Wisata Minggu Ini
-        $wisata_mingguan = mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM data_peserta_wisata WHERE tgl_keberangkatan >= '$awal_minggu'");
-        $jumlah_wisata = mysqli_fetch_assoc($wisata_mingguan)['total'];
+// Total Pemasukan Hari Ini
+$pemasukan = 0;
+$pemasukan_query = mysqli_query($koneksi, "
+    SELECT harga, jumlah_dp, tambahan_dp, status_bayar 
+    FROM data_pesanan 
+    WHERE DATE(waktu_berangkat) = '$tanggal_hari_ini'
+    AND status_bayar != 'Belum Bayar'
+");
 
-        // Total Pemasukan Hari Ini
-        $pemasukan = 0;
-        $data_pemasukan = [];
+while ($row = mysqli_fetch_assoc($pemasukan_query)) {
+    if ($row['status_bayar'] === 'DP') {
+        $pemasukan += $row['jumlah_dp'] + $row['tambahan_dp'];
+    } else {
+        $pemasukan += $row['harga'];
+    }
+}
+?>
 
-        // Travel hari ini
-        $travel = mysqli_query($koneksi, "SELECT harga, status_bayar FROM data_penumpang_travel WHERE tgl_berangkat = '$tanggal_hari_ini' AND status_bayar != 'Belum Bayar'");
-        while ($row = mysqli_fetch_assoc($travel)) {
-            $pemasukan += $row['status_bayar'] == 'DP' ? ($row['harga'] / 2) : $row['harga'];
-        }
-
-        // Carter hari ini
-        $carter = mysqli_query($koneksi, "SELECT harga, status_bayar FROM data_penumpang_carter WHERE tgl_sewa = '$tanggal_hari_ini' AND status_bayar != 'Belum Bayar'");
-        while ($row = mysqli_fetch_assoc($carter)) {
-            $pemasukan += $row['status_bayar'] == 'DP' ? ($row['harga'] / 2) : $row['harga'];
-        }
-
-        // Wisata hari ini
-        $wisata = mysqli_query($koneksi, "SELECT harga, status_bayar FROM data_peserta_wisata WHERE tgl_keberangkatan = '$tanggal_hari_ini' AND status_bayar != 'Belum Bayar'");
-        while ($row = mysqli_fetch_assoc($wisata)) {
-            $pemasukan += $row['status_bayar'] == 'DP' ? ($row['harga'] / 2) : $row['harga'];
-        }
-        ?>
-
-        <div class="row">
+<div class="container-fluid">
+    <div class="row">
+        <!-- Travel Hari Ini -->
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
-            <div class="inner">
-                <h3><?= $jumlah_travel ?></h3>
-                <p>Jadwal Travel Hari Ini</p>
-            </div>
-            <div class="icon"><i class="fas fa-bus"></i></div>
-            
+                <div class="inner">
+                    <h3><?= $jumlah_travel ?></h3>
+                    <p>Jadwal Travel Hari Ini</p>
+                </div>
+                <div class="icon"><i class="fas fa-bus"></i></div>
             </div>
         </div>
 
+        <!-- Carter Aktif -->
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
-            <div class="inner">
-                <h3><?= $jumlah_carter ?></h3>
-                <p>Jadwal Charter Aktif</p>
-            </div>
-            <div class="icon"><i class="fas fa-car"></i></div>
-            
+                <div class="inner">
+                    <h3><?= $jumlah_carter ?></h3>
+                    <p>Jadwal Carter Aktif</p>
+                </div>
+                <div class="icon"><i class="fas fa-car"></i></div>
             </div>
         </div>
 
+        <!-- Wisata Minggu Ini -->
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
-            <div class="inner">
-                <h3><?= $jumlah_wisata ?></h3>
-                <p>Booking Wisata Minggu Ini</p>
-            </div>
-            <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
-            
+                <div class="inner">
+                    <h3><?= $jumlah_wisata ?></h3>
+                    <p>Booking Wisata Minggu Ini</p>
+                </div>
+                <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
             </div>
         </div>
 
+        <!-- Pemasukan Hari Ini -->
         <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
-            <div class="inner">
-                <h3>Rp <?= number_format($pemasukan, 0, ',', '.') ?></h3>
-                <p>Pemasukan Hari Ini</p>
-            </div>
-            <div class="icon"><i class="fas fa-wallet"></i></div>
-            
+                <div class="inner">
+                    <h3>Rp <?= number_format($pemasukan, 0, ',', '.') ?></h3>
+                    <p>Pemasukan Hari Ini</p>
+                </div>
+                <div class="icon"><i class="fas fa-wallet"></i></div>
             </div>
         </div>
-        </div>
-
-        <!-- /.row -->
-
-    </div><!-- /.container-fluid -->
+    </div>
+</div>
 </section>
 <!-- /.content -->
 <?php
